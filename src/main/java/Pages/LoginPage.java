@@ -19,17 +19,7 @@ public final class LoginPage extends BasePage
 
 
 
-    /**
-     * Initializing Page factory
-     */
-//    public LoginPage()
-//    {
-////        super();
-//        PageFactory.initElements(BaseClass.getDriver(), this);
-//    }
-
-
-    /**************************    WebElements actions and methods  ************************************************/
+    /*******************    WebElements actions and methods  *****************************/
 
 
     /**

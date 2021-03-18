@@ -13,16 +13,8 @@ public final class Homepage extends BasePage
     private final By LogoutBtn = By.xpath("//a[contains(text(),'Logout')]");
 
 
-    /**
-     * Initializing Page factory
-     */
-//    public Homepage()
-//    {
-//        PageFactory.initElements(BaseClass.getDriver(), this);
-//    }
-
-/**************************    WebElements actions and methods  ************************************************/
-
+    
+    /*******************    WebElements actions and methods  *****************************/
 
     /**
      *
