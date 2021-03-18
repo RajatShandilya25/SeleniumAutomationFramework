@@ -26,4 +26,13 @@ public class BasePage
         BaseClass.getDriver().findElement(by).sendKeys(keysToSend);
     }
 
+
+    /**
+     * @return current page title
+     */
+    protected static String getCurrentPageTitle()
+    {
+        System.out.println("Title --> " +BaseClass.getDriver().getTitle());
+        return BaseClass.getDriver().getTitle();
+    }
 }

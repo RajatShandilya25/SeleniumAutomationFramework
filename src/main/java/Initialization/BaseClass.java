@@ -84,16 +84,4 @@ public final class BaseClass
     }
 
 
-
-
-    /**
-     *
-     * @return current page title
-     */
-    public static String getCurrentPageTitle()
-    {
-        System.out.println("Title --> " +getDriver().getTitle());
-        return getDriver().getTitle();
-    }
-
 }

@@ -28,8 +28,8 @@ public final class LoginPage extends BasePage
      */
     public String getPageTitle()
     {
-        System.out.println("Title --> " +BaseClass.getCurrentPageTitle());
-        return BaseClass.getCurrentPageTitle();
+        System.out.println("Title --> " +getCurrentPageTitle());
+        return getCurrentPageTitle();
     }
 
     /**

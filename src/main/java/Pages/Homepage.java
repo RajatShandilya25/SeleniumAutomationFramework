@@ -13,7 +13,6 @@ public final class Homepage extends BasePage
     private final By LogoutBtn = By.xpath("//a[contains(text(),'Logout')]");
 
 
-    
     /*******************    WebElements actions and methods  *****************************/
 
     /**
@@ -22,8 +21,8 @@ public final class Homepage extends BasePage
      */
     public String getPageTitle()
     {
-        System.out.println("Title --> " +BaseClass.getCurrentPageTitle());
-        return BaseClass.getCurrentPageTitle();
+        System.out.println("Title --> " +getCurrentPageTitle());
+        return getCurrentPageTitle();
     }
 
     public Homepage clickWelcomeBtn()

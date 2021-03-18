@@ -1,6 +1,7 @@
 package TestCases;
 
 import Initialization.BaseClass;
+import Pages.BasePage;
 import Pages.Homepage;
 import Pages.LoginPage;
 import Utility.ReadPropertyFile;
@@ -35,7 +36,7 @@ public class HomepageTest extends BaseTest
     @Test(priority = 1)
     public void validateTitle() throws IOException
     {
-        String Title = BaseClass.getCurrentPageTitle();
+        String Title = Home_Page.getPageTitle();
         Assert.assertEquals(Title, ReadPropertyFile.readPropertyFile("HomepageTitle"));
     }
 

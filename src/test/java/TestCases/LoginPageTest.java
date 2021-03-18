@@ -1,6 +1,7 @@
 package TestCases;
 
 import Initialization.BaseClass;
+import Pages.BasePage;
 import Pages.LoginPage;
 import Utility.ReadPropertyFile;
 import org.openqa.selenium.By;
@@ -20,6 +21,9 @@ constructor is final so that other classes can't create an object of this class
  */
 public final class LoginPageTest extends BaseTest
 {
+    LoginPage Login_Page;
+
+
     //Private constructor
     private LoginPageTest() { }
 
@@ -29,6 +33,7 @@ public final class LoginPageTest extends BaseTest
     protected void setUp() throws IOException
     {
         BaseClass.initializeDriver();
+        Login_Page = new LoginPage();
     }
 
     /**
@@ -38,8 +43,7 @@ public final class LoginPageTest extends BaseTest
     @Test(priority = 1)
     public void validateTitle() throws IOException
     {
-        String Title = BaseClass.getCurrentPageTitle();
-        Assert.assertEquals(Title, ReadPropertyFile.readPropertyFile("LoginpageTitle"));
+        Assert.assertEquals(Login_Page.getPageTitle(), ReadPropertyFile.readPropertyFile("LoginpageTitle"));
     }
 
 
@@ -50,10 +54,9 @@ public final class LoginPageTest extends BaseTest
     @Test(priority = 2)
     public void validateLogin() throws IOException
     {
-        LoginPage Login_Page = new LoginPage();
-        Login_Page.enterUsername("Admin").enterPassword("admin123").clickLoginBtn();
+        String HomepageTitle = Login_Page.enterUsername("Admin").enterPassword("admin123").clickLoginBtn().getPageTitle();
 
-        Assert.assertEquals(BaseClass.getCurrentPageTitle(), ReadPropertyFile.readPropertyFile("HomepageTitle"));
+        Assert.assertEquals(HomepageTitle, ReadPropertyFile.readPropertyFile("HomepageTitle"));
     }
 
 
