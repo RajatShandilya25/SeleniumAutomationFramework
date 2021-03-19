@@ -1,6 +1,7 @@
 package Pages;
 
 import Initialization.BaseClass;
+import Utility.SeleniumUtility;
 import org.openqa.selenium.By;
 
 public class BasePage
@@ -13,6 +14,7 @@ public class BasePage
      */
     protected void click(By by)
     {
+        SeleniumUtility.WaitTillElementIsClickable(by);
         BaseClass.getDriver().findElement(by).click();
     }
 
