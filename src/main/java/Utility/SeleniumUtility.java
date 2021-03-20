@@ -149,8 +149,11 @@ public class SeleniumUtility {
     }
 
 
-    /***************************************** TAKE SCREENSHOT ********************************************/
-
+    /**
+     * Take screenshot of the screena and save in provided directory
+     * @param FileName Name of the screenshot
+     * @throws IOException If the file is not found
+     */
     public static void TakeScreenshot(String FileName) throws IOException {
         // Take screenshot and store it as a file format
         File File = ((TakesScreenshot) BaseClass.getDriver()).getScreenshotAs(OutputType.FILE);
@@ -160,14 +163,24 @@ public class SeleniumUtility {
     }
 
 
-    /*************************************** WAIT FOR ELEMENT VISIBLITY ********************************************/
 
+    /**
+     * Wait for the element to be visible
+     * @param element The web element
+     * @param TimeInSeconds Time for the driver to wait
+     */
     public static void waitTillElementIsVisible(WebElement element, int TimeInSeconds)
     {
         wait = new WebDriverWait(BaseClass.getDriver(), TimeInSeconds);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
+
+    /**
+     * Wait for the element to be visible
+     * @param by The by locator of element
+     * @param TimeInSeconds Time for the driver to wait
+     */
     public static void waitTillElementIsVisible(By by, int TimeInSeconds)
     {
         wait = new WebDriverWait(BaseClass.getDriver(), TimeInSeconds);
@@ -175,16 +188,22 @@ public class SeleniumUtility {
     }
 
 
-    /*************************************** Wait TILL ELEMENT IS CLICKABLE ********************************************/
-
-    public static void WaitTillElementIsClickable(WebElement element) {
-        wait = new WebDriverWait(BaseClass.getDriver(), 20);
-        wait.until(ExpectedConditions.or(ExpectedConditions.elementToBeClickable(element),
+    /**
+     * Wait for the elemnt to be clickable and visible
+     * @param element The Web element
+     */
+    public static void waitTillElementIsClickable(WebElement element) {
+        wait = new WebDriverWait(BaseClass.getDriver(), FrameworkConstants.EXPLICITWAIT_CLICKABLE_TIME);
+        wait.until(ExpectedConditions.and(ExpectedConditions.elementToBeClickable(element),
                 ExpectedConditions.visibilityOf(element)));    }
 
-    public static void WaitTillElementIsClickable(By by) {
-        wait = new WebDriverWait(BaseClass.getDriver(), 20);
-        wait.until(ExpectedConditions.or(ExpectedConditions.elementToBeClickable(by),
+    /**
+     * Wait for the elemnt to be clickable and visible
+     * @param by The by locator of the element
+     */
+    public static void waitTillElementIsClickable(By by) {
+        wait = new WebDriverWait(BaseClass.getDriver(), FrameworkConstants.EXPLICITWAIT_CLICKABLE_TIME);
+        wait.until(ExpectedConditions.and(ExpectedConditions.elementToBeClickable(by),
                 ExpectedConditions.visibilityOfElementLocated(by)));
     }
 
@@ -192,7 +211,7 @@ public class SeleniumUtility {
 
     public static void WaitTillElementIsInvisible(WebElement element)
     {
-        wait = new WebDriverWait(BaseClass.getDriver(), 60);
+        wait = new WebDriverWait(BaseClass.getDriver(), 60 );
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 

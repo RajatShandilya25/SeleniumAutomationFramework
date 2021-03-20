@@ -14,7 +14,7 @@ public class BasePage
      */
     protected void click(By by)
     {
-        SeleniumUtility.WaitTillElementIsClickable(by);
+        SeleniumUtility.waitTillElementIsClickable(by);
         BaseClass.getDriver().findElement(by).click();
     }
 
@@ -25,6 +25,7 @@ public class BasePage
      */
     protected void sendKeys(By by, String keysToSend)
     {
+        SeleniumUtility.waitTillElementIsClickable(by);
         BaseClass.getDriver().findElement(by).sendKeys(keysToSend);
     }
 
