@@ -1,9 +1,11 @@
 package Initialization;
 
+import Utility.FrameworkConstants;
 import Utility.ReadPropertyFile;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -46,23 +48,17 @@ public final class BaseClass
     }
 
     /**
+     * Objects.nonNull(driver) works same as driver != null.
+     * It checks that the driver is not null.
+     *
      * Quit and removes the driver
      */
-    public static void removeDriver()
-    {
-        getDriver().quit();
-        driver.remove();
-    }
-
-    /*
-   Objects.nonNull(driver) works same as driver != null.
-   It checks that the driver is not null.
-    */
     public static void quitDriver()
     {
         if(Objects.nonNull(getDriver()))
         {
-            removeDriver();
+            getDriver().quit();
+            driver.remove();
         }
     }
 
@@ -71,17 +67,20 @@ public final class BaseClass
     Objects.isNull(driver) works same as driver == null.
     It checks that the driver is null.
      */
-    public static void initializeDriver() throws IOException
+    public static void initializeDriver(String BrowserName) throws IOException
     {
-       if(Objects.isNull(getDriver()))
-       {
-           WebDriverManager.chromedriver().setup();
-           setDriver(new ChromeDriver());
-           getDriver().get(ReadPropertyFile.readPropertyFile("url").trim());
-           getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        if (BrowserName.equalsIgnoreCase("Chrome") && Objects.isNull(getDriver()))
+            {
+                WebDriverManager.chromedriver().setup();
+                setDriver(new ChromeDriver());
+            }
+        else if(BrowserName.equalsIgnoreCase("Firefox") && Objects.isNull(getDriver()))
+        {
+            WebDriverManager.firefoxdriver().setup();
+            setDriver(new FirefoxDriver());
+        }
+        getDriver().get(ReadPropertyFile.readPropertyFile("Url").trim());
+        getDriver().manage().timeouts().pageLoadTimeout(FrameworkConstants.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
 //           getDriver().manage().deleteAllCookies();
-       }
     }
-
-
 }

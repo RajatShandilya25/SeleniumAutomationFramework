@@ -1,6 +1,7 @@
 package TestCases;
 
 import Initialization.BaseClass;
+import Utility.ReadPropertyFile;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
@@ -18,17 +19,30 @@ public abstract class BaseTest
     protected BaseTest() {}
 
 
-//    @BeforeTest
     @BeforeMethod
-    protected abstract void setUp() throws IOException;
+    protected abstract void setUp(String browserName) throws IOException;
 
-//    @AfterTest
     @AfterMethod
     protected void tearDown()
     {
         BaseClass.quitDriver();
     }
 
+    protected static void enableCrossBrowser(String BrowserName) throws IOException
+    {
+        if(BrowserName.equalsIgnoreCase("Chrome"))
+        {
+            BaseClass.initializeDriver("Chrome");
+        }
+        else if(BrowserName.equalsIgnoreCase("Firefox"))
+        {
+            BaseClass.initializeDriver("Firefox");
+        }
+        else
+        {
+            BaseClass.initializeDriver("Chrome");
+        }
+    }
 
 
 }

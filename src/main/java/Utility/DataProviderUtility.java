@@ -11,15 +11,25 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DataProviderUtility
+public final class DataProviderUtility
 {
+    public DataProviderUtility() {}
 
-    @Test(dataProvider = "getData1")
-    public void validateTestData(Map<String, String> dataMap)
-    {
-        System.out.println(dataMap.get("Username") +" : " +dataMap.get("Password") +" : " +dataMap.get("Age")
-         +" : " +dataMap.get("Gender"));
-    }
+    /**
+     * Test method to check the functioning of the data provider method
+     */
+//    @Test(dataProvider = "getData", dataProviderClass = DataProviderUtility.class)
+//    public void validateTestData(Map<String, String> dataMap)
+//    {
+//        System.out.println(dataMap.get("Username") +" : " +dataMap.get("Password"));
+//    }
+//
+//    @Test
+//    public void newTest(Map<String, String> dataMap)
+//    {
+//        System.out.println(dataMap.get("Username") +" : " +dataMap.get("Password") +" : " +dataMap.get("Age")
+//                +" : " +dataMap.get("Gender"));
+//    }
 
 
     /**
@@ -37,15 +47,28 @@ public class DataProviderUtility
      * NOTE: Add " ' " as a prefix to integer value in excel sheet to read them as a string otherwise
      * we've to convert them to String explicitly
      *
+     * NOTE: To run data privider test in parallel, do "parallel=true" in @DataProvider method
+     * & add a parameter in testNG.xml file to control the data provider parallel thread count
+     * data-provider-thread-count = "give reasonbale thread count number Ex: 3 or 4"
+     *
      * @throws IOException if excel file is not found
      * @return object[]
      */
-    @DataProvider
-    public Object[] getData1() throws IOException
+    @DataProvider(parallel = true)
+    public Object[] getData()
     {
-        FileInputStream fis = new FileInputStream(FrameworkConstants.EXCEL_FILE_PATH);
-        XSSFWorkbook workbook = new XSSFWorkbook(fis);
-        XSSFSheet sheet = workbook.getSheet("TestDataSheet");
+        XSSFSheet sheet = null;
+        try {
+            FileInputStream fis = new FileInputStream(FrameworkConstants.EXCEL_FILE_PATH);
+            XSSFWorkbook workbook = new XSSFWorkbook(fis);
+             sheet = workbook.getSheet(FrameworkConstants.TESTDATA_SHEET);
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+//        XSSFSheet sheet = workbook.getSheet("TestDataSheet");
+
 
         int rowCount = sheet.getLastRowNum();
 //        System.out.println("-->" +rowCount);
@@ -62,11 +85,9 @@ public class DataProviderUtility
             dataMap = new LinkedHashMap<>();
             for(int j=0; j<columnCount; j++)
             {
-                String  key = sheet.getRow(0).getCell(j).getStringCellValue();
-                String value = sheet.getRow(i).getCell(j).getStringCellValue();
-                dataMap.put(key, value);
+                dataMap.put(sheet.getRow(0).getCell(j).getStringCellValue(),
+                        sheet.getRow(i).getCell(j).getStringCellValue());
                 testData[i-1] = dataMap;
-//                System.out.print(testData[i-1][j] +", ");
             }
         }
 
@@ -75,7 +96,7 @@ public class DataProviderUtility
 
 
 
-    
+
 
     /**
      * First we give the file location using FileInputStream class

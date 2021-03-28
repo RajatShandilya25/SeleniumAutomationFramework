@@ -70,36 +70,39 @@ public class SeleniumUtility {
 
     /******************************* SCROLL TO ELEMENT ******************************************/
 
-    public static void ScrollToTheElement(WebElement Element) {
+    public static void ScrollToTheElement(WebElement Element)
+    {
         js = (JavascriptExecutor) BaseClass.getDriver();
         js.executeScript("arguments[0].scrollIntoView();", Element);
-//		js.executeScript("arguments[0].click()", Element);
     }
 
 
     /******************************* SCROLL TO ELEMENT AND CLICK ******************************************/
 
-    public static void ScrollToTheElementAndClickUsingJS(WebElement Element) {
+    public static void ScrollToTheElementAndClickUsingJS(WebElement Element)
+    {
         js = (JavascriptExecutor) BaseClass.getDriver();
         js.executeScript("arguments[0].click()", Element);
     }
 
     /******************************* SCROLL TO ELEMENT AND CLICK ******************************************/
 
-    public static void ScrollToTheElementAndClick(WebElement Element) {
+    public static void ScrollToTheElementAndClick(WebElement Element)
+    {
         js = (JavascriptExecutor) BaseClass.getDriver();
         js.executeScript("arguments[0].click()", Element);
     }
 
     /******************************* SCROLL TILL ELEMENT IS VISIBLE ******************************************/
 
-    public static void ScrollTillElementIsVisible(WebElement Element) {
-        while (!Element.isDisplayed()) {
+    public static void ScrollTillElementIsVisible(WebElement Element)
+    {
+        while (!Element.isDisplayed())
+        {
             js = (JavascriptExecutor) BaseClass.getDriver();
             js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
         }
-
     }
 
     /***************************** SEND KEYS USING JAVA SCRIPT EXECUTOR ****************************************/

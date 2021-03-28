@@ -2,17 +2,18 @@ package TestCases;
 
 import Initialization.BaseClass;
 import Pages.BasePage;
+import Pages.Homepage;
 import Pages.LoginPage;
+import Utility.DataProviderUtility;
 import Utility.ReadPropertyFile;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 
 /*
@@ -27,12 +28,22 @@ public final class LoginPageTest extends BaseTest
     //Private constructor
     private LoginPageTest() { }
 
-    //Overriding BaseTest class methods
+
+//    //Overriding BaseTest class methods
+//    @Override
+//    @BeforeMethod()
+//    protected void setUp() throws IOException
+//    {
+//        BaseClass.initializeDriver("Chrome");
+//        Login_Page = new LoginPage();
+//    }
+
     @Override
     @BeforeMethod
-    protected void setUp() throws IOException
+    @Parameters({"browserName"})
+    protected void setUp(String browserName) throws IOException
     {
-        BaseClass.initializeDriver();
+        enableCrossBrowser(browserName);
         Login_Page = new LoginPage();
     }
 
@@ -41,24 +52,30 @@ public final class LoginPageTest extends BaseTest
      * @throws IOException
      */
     @Test(priority = 1)
-    public void validateTitle() throws IOException
+    public void validateLoginPageTitle() throws IOException
     {
         Assert.assertEquals(Login_Page.getPageTitle(), ReadPropertyFile.readPropertyFile("LoginpageTitle"));
     }
 
 
     /**
-     * Validates login flow and check home page title after successful login
+     * Validates login flow and check home page title after unsuccessful login
      * @throws IOException
      */
-    @Test(priority = 2)
-    public void validateLogin() throws IOException
+    @Test(priority = 2, dataProvider = "getData", dataProviderClass = DataProviderUtility.class)
+    public void validateLoginWithIncorrectCredentials(Map<String, String> dataMap) throws IOException
     {
-        String HomepageTitle = Login_Page.enterUsername("Admin").enterPassword("admin123").clickLoginBtn().getPageTitle();
+        String HomepageTitle = Login_Page.enterUsername(dataMap.get("Username"))
+                .enterPassword(dataMap.get("Password")).clickLoginBtn().getPageTitle();
 
         Assert.assertEquals(HomepageTitle, ReadPropertyFile.readPropertyFile("HomepageTitle"));
+        Assert.assertTrue(false, "Incorrect credentials. Failing explicitly");
     }
 
-
+    @Test(priority = 3)
+    public void validateTest()
+    {
+        System.out.println("Validate test");
+    }
 
 }
