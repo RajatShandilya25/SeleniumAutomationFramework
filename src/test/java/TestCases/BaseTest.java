@@ -1,8 +1,6 @@
 package TestCases;
 
 import Initialization.BaseClass;
-import Utility.ReadPropertyFile;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
 import java.io.IOException;

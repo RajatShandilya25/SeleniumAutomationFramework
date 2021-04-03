@@ -1,6 +1,7 @@
 package Utility;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
@@ -25,13 +26,25 @@ public final class ReadPropertyFile
      * @return the key's value
      * @throws IOException when file is not found
      */
-    public static String readPropertyFile(String Key) throws IOException
+    public static String readPropertyFile(String Key)
     {
         if(Objects.isNull(Key)) throw new NullPointerException("** Properties file not found. **");
 
         properties = new Properties();
-        FileInputStream fis = new FileInputStream(FrameworkConstants.CONFIG_FILE_PATH);
-        properties.load(fis);
+        FileInputStream fis = null;
+        try
+        {
+            fis = new FileInputStream(FrameworkConstants.CONFIG_FILE_PATH);
+            properties.load(fis);
+        }
+        catch(FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
         return properties.getProperty(Key);
     }
 

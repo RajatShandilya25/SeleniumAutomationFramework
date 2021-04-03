@@ -1,17 +1,11 @@
 package TestCases;
 
-import Initialization.BaseClass;
-import Pages.BasePage;
-import Pages.Homepage;
+
 import Pages.LoginPage;
 import Utility.DataProviderUtility;
 import Utility.ReadPropertyFile;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
 import java.io.IOException;
 import java.util.Map;
 
@@ -69,7 +63,7 @@ public final class LoginPageTest extends BaseTest
                 .enterPassword(dataMap.get("Password")).clickLoginBtn().getPageTitle();
 
         Assert.assertEquals(HomepageTitle, ReadPropertyFile.readPropertyFile("HomepageTitle"));
-        Assert.assertTrue(false, "Incorrect credentials. Failing explicitly");
+//        Assert.assertTrue(false, "Failing explicitly");
     }
 
     @Test(priority = 3)

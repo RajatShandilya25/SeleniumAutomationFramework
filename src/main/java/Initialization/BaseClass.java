@@ -6,8 +6,13 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -67,17 +72,53 @@ public final class BaseClass
     Objects.isNull(driver) works same as driver == null.
     It checks that the driver is null.
      */
-    public static void initializeDriver(String BrowserName) throws IOException
+    public static void initializeDriver(String BrowserName)
     {
         if (BrowserName.equalsIgnoreCase("Chrome") && Objects.isNull(getDriver()))
             {
                 WebDriverManager.chromedriver().setup();
-                setDriver(new ChromeDriver());
+
+                //Remote driver
+                if(ReadPropertyFile.readPropertyFile("RunMode").equalsIgnoreCase("Docker"))
+                {
+                    DesiredCapabilities capabilities = new DesiredCapabilities();
+                    capabilities.setBrowserName(BrowserType.CHROME);
+                    try
+                    {
+                        BaseClass.setDriver(new RemoteWebDriver(new URL(""), capabilities));
+                    }
+                    catch (MalformedURLException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                else
+                {
+                    setDriver(new ChromeDriver());
+                }
             }
         else if(BrowserName.equalsIgnoreCase("Firefox") && Objects.isNull(getDriver()))
         {
             WebDriverManager.firefoxdriver().setup();
-            setDriver(new FirefoxDriver());
+
+            //Remote driver
+            if(ReadPropertyFile.readPropertyFile("RunMode").equalsIgnoreCase("Docker"))
+            {
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                capabilities.setBrowserName(BrowserType.FIREFOX);
+                try
+                {
+                    BaseClass.setDriver(new RemoteWebDriver(new URL(""), capabilities));
+                }
+                catch (MalformedURLException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else
+                {
+                setDriver(new FirefoxDriver());
+            }
         }
         getDriver().get(ReadPropertyFile.readPropertyFile("Url").trim());
         getDriver().manage().timeouts().pageLoadTimeout(FrameworkConstants.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);

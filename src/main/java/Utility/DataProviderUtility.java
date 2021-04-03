@@ -15,22 +15,6 @@ public final class DataProviderUtility
 {
     public DataProviderUtility() {}
 
-    /**
-     * Test method to check the functioning of the data provider method
-     */
-//    @Test(dataProvider = "getData", dataProviderClass = DataProviderUtility.class)
-//    public void validateTestData(Map<String, String> dataMap)
-//    {
-//        System.out.println(dataMap.get("Username") +" : " +dataMap.get("Password"));
-//    }
-//
-//    @Test
-//    public void newTest(Map<String, String> dataMap)
-//    {
-//        System.out.println(dataMap.get("Username") +" : " +dataMap.get("Password") +" : " +dataMap.get("Age")
-//                +" : " +dataMap.get("Gender"));
-//    }
-
 
     /**
      * First we give the file location using FileInputStream class
@@ -58,24 +42,27 @@ public final class DataProviderUtility
     public Object[] getData()
     {
         XSSFSheet sheet = null;
-        try {
-            FileInputStream fis = new FileInputStream(FrameworkConstants.EXCEL_FILE_PATH);
+        try(FileInputStream fis = new FileInputStream(FrameworkConstants.EXCEL_FILE_PATH))
+        {
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
              sheet = workbook.getSheet(FrameworkConstants.TESTDATA_SHEET);
+        }
+        catch(FileNotFoundException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException("Excel file not found"); //This will terrminate the program and won't proceed further'
         }
         catch(IOException e)
         {
             e.printStackTrace();
+            throw new RuntimeException("Exception occurred while reading the excel file");
         }
-//        XSSFSheet sheet = workbook.getSheet("TestDataSheet");
-
 
         int rowCount = sheet.getLastRowNum();
 //        System.out.println("-->" +rowCount);
 
         int columnCount = sheet.getRow(0).getLastCellNum();
 //        System.out.println("-->" +columnCount);
-
 
         Object testData[] = new Object[rowCount];
         Map<String, String> dataMap;
@@ -90,52 +77,15 @@ public final class DataProviderUtility
                 testData[i-1] = dataMap;
             }
         }
-
         return testData;
     }
 
-
-
-
-
     /**
-     * First we give the file location using FileInputStream class
-     * then find the workbook in the location using XSSFWorkbook class
-     * then find the sheet in the excel file using XSSFWorkbook object which returns XSSFSheet class object
-     * We have the sheet and file
-     * - Now iterate through the file and save data in Object[number of rows][number of columns];
-     *
-     * sheet.getLastRowNum() -> last row number
-     * sheet.getRow(0).getLastCellNum() -> last column cell number for the row as columns are
-     * same for every row
-     *
-     * NOTE: Add " ' " as a prefix to integer value in excel sheet to read them as a string otherwise
-     * we've to convert them to String explicitly
-     *
-     * @throws IOException if excel file is not found
-     * @return object[][]
+     * Test method to check the functioning of the data provider method
      */
-//    @DataProvider
-//    public Object[][] getData() throws IOException
+//    @Test(dataProvider = "getData", dataProviderClass = DataProviderUtility.class)
+//    public void validateTestData(Map<String, String> dataMap)
 //    {
-//        FileInputStream fis = new FileInputStream(FrameworkConstants.EXCEL_FILE_PATH);
-//        XSSFWorkbook workbook = new XSSFWorkbook(fis);
-//        XSSFSheet sheet = workbook.getSheet("TestDataSheet");
-//
-//        int rowCount = sheet.getLastRowNum();
-//
-//        int columnCount = sheet.getRow(0).getLastCellNum();
-//
-//
-//        Object testData[][] = new Object[rowCount][columnCount];
-//        for(int i=1; i<=rowCount; i++)
-//        {
-//            for(int j=0; j<columnCount; j++)
-//            {
-//                testData[i-1][j] = sheet.getRow(i).getCell(j).getStringCellValue();
-//            }
-//        }
-//
-//        return testData;
+//        System.out.println(dataMap.get("Username") +" : " +dataMap.get("Password"));
 //    }
 }
