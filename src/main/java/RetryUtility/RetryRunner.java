@@ -15,8 +15,7 @@ public final class RetryRunner implements IRetryAnalyzer
     @Override
     public boolean retry(ITestResult result)
     {
-        try
-        {
+
             if(ReadPropertyFile.readPropertyFile("DoRetry").equalsIgnoreCase("True")
                     && count < RetryCount)
             {
@@ -24,12 +23,6 @@ public final class RetryRunner implements IRetryAnalyzer
                 System.out.println("** Retrying " +result.getName() +" "+(count) +" **");
                 return true;
             }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
         return false;
     }
 }

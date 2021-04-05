@@ -85,7 +85,7 @@ public final class BaseClass
                     capabilities.setBrowserName(BrowserType.CHROME);
                     try
                     {
-                        BaseClass.setDriver(new RemoteWebDriver(new URL(""), capabilities));
+                        BaseClass.setDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities));
                     }
                     catch (MalformedURLException e)
                     {
@@ -108,7 +108,7 @@ public final class BaseClass
                 capabilities.setBrowserName(BrowserType.FIREFOX);
                 try
                 {
-                    BaseClass.setDriver(new RemoteWebDriver(new URL(""), capabilities));
+                    BaseClass.setDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities));
                 }
                 catch (MalformedURLException e)
                 {
