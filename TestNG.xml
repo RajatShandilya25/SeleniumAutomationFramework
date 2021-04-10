@@ -5,7 +5,7 @@
     <listeners>
 <!--        <listener class-name="RetryUtility.AnnotationTransformer"></listener>-->
 <!--        <listener class-name="RetryUtility.Listeners"></listener>-->
-<!--        <listener class-name="RetryUtility.MethodInterceptor_ExcelSheet"></listener>-->
+        <listener class-name="RetryUtility.MethodInterceptor_ExcelSheet_RunManager"></listener>
 
     </listeners>
 

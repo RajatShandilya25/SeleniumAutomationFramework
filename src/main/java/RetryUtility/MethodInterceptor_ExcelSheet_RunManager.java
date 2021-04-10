@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MethodInterceptor_ExcelSheet implements IMethodInterceptor
+public class MethodInterceptor_ExcelSheet_RunManager implements IMethodInterceptor
 {
 
 

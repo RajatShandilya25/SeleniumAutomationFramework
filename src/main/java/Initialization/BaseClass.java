@@ -44,7 +44,7 @@ public final class BaseClass
     }
 
     /**
-     * set the driver
+     * set the driver instance to thread local variable
      * @param Driver
      */
     public static void setDriver(WebDriver Driver)
@@ -85,7 +85,7 @@ public final class BaseClass
                     capabilities.setBrowserName(BrowserType.CHROME);
                     try
                     {
-                        BaseClass.setDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities));
+                        BaseClass.setDriver(new RemoteWebDriver(new URL(ReadPropertyFile.readPropertyFile("SeleniumGridUrl")), capabilities));
                     }
                     catch (MalformedURLException e)
                     {
@@ -108,7 +108,7 @@ public final class BaseClass
                 capabilities.setBrowserName(BrowserType.FIREFOX);
                 try
                 {
-                    BaseClass.setDriver(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities));
+                    BaseClass.setDriver(new RemoteWebDriver(new URL(ReadPropertyFile.readPropertyFile("SeleniumGridUrl")), capabilities));
                 }
                 catch (MalformedURLException e)
                 {
