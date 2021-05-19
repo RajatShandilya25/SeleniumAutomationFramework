@@ -20,9 +20,6 @@ public class MethodInterceptor_ExcelSheet_RunManager implements IMethodIntercept
     public List<IMethodInstance> intercept(List<IMethodInstance> methods, ITestContext context)
     {
         List<IMethodInstance> finalTestsList = null;
-        
-        try
-        {
             List<Map<String, String>> dataList = DataProviderUtility_RunMAnager.getRunManagerData(FrameworkConstants.RUNMANAGER_SHEET);
             finalTestsList = new ArrayList<>();
 
@@ -41,11 +38,8 @@ public class MethodInterceptor_ExcelSheet_RunManager implements IMethodIntercept
                     }
                 }
             }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+
+
 
         return finalTestsList;
     }

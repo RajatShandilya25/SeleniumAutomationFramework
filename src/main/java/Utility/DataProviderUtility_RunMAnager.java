@@ -3,6 +3,7 @@ package Utility;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -19,11 +20,24 @@ public final class DataProviderUtility_RunMAnager
      * @return a list of hash maps.
      * @throws IOException when file is not found.
      */
-    public static List<Map<String, String>>  getRunManagerData(String SheetName) throws IOException
+    public static List<Map<String, String>>  getRunManagerData(String SheetName)
     {
-        FileInputStream fis = new FileInputStream(FrameworkConstants.EXCEL_FILE_PATH);
-        XSSFWorkbook workbook = new XSSFWorkbook(fis);
-        XSSFSheet sheet = workbook.getSheet(SheetName);
+        XSSFSheet sheet = null;
+        try (FileInputStream fis = new FileInputStream(FrameworkConstants.EXCEL_FILE_PATH))
+        {
+            XSSFWorkbook workbook = new XSSFWorkbook(fis);
+            sheet = workbook.getSheet(SheetName);
+        }
+        catch(FileNotFoundException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException("Excel file not found"); //This will terrminate the program and won't proceed further'
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException("Exception occurred while reading the excel file");
+        }
 
         Map<String, String> dataMap = null;
         List<Map<String, String>> dataList =  new LinkedList<>();

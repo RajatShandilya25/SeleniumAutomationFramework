@@ -84,7 +84,7 @@ public final class DataProviderUtility
      * Test method to check the functioning of the data provider method
      */
 //    @Test(dataProvider = "getData", dataProviderClass = DataProviderUtility.class)
-//    public void validateTestData(Map<String, String> dataMap)
+//    public void validateTestData(Map<Strng, String> dataMap)
 //    {
 //        System.out.println(dataMap.get("Username") +" : " +dataMap.get("Password"));
 //    }
